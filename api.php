@@ -20,7 +20,7 @@ if (isset($postdata)) {
 	
 	$conexao = new mysqli("localhost","root","","conf");
 	//$query = "select id, codigo, nome, total, media, porcen from analise where empresa like '%" . $empresa . "%' order by rand()";
-	$query = "select id, codigo, nome, total, media, porcen from analise";
+	$query = "select id, codigo, nome, total, media, porcen, data from analise";
 	class analiseprodconf{
 		public $id;
 		public $codigo;
@@ -28,6 +28,7 @@ if (isset($postdata)) {
 		public $total;
 		public $media;
 		public $porcen;
+		public $data;
 	}
 	if( $result = $conexao->query($query) ){
 
@@ -39,10 +40,12 @@ if (isset($postdata)) {
 	while ($obj = $result->fetch_object()) {
 		$analiseprodconf = new analiseprodconf();
 		$analiseprodconf->id = utf8_encode( $obj->id );
+		$analiseprodconf->codigo = utf8_encode( $obj->codigo );
 		$analiseprodconf->nome = utf8_encode( $obj->nome );
 		$analiseprodconf->total = utf8_encode( $obj->total );
 		$analiseprodconf->media = utf8_encode( $obj->media );
 		$analiseprodconf->porcen = utf8_encode( $obj->porcen );
+		$analiseprodconf->data = utf8_encode( $obj->data );
 		$analises[] = (object)$analiseprodconf;
 	}
 	$result->close();
